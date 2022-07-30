@@ -9,47 +9,68 @@ import (
 )
 
 func main() {
-	reader := bufio.NewReader(os.Stdin)
+	setupSignalHandling()
 
+	reader := bufio.NewReader(os.Stdin)
+	for {
+		userInput := promptForInput(reader)
+
+		serializedInput := serializeUserInput(userInput)
+		decideOutput(serializedInput)
+	}
+}
+
+func setupSignalHandling() {
 	c := make(chan os.Signal, 1)
-	signal.Ignore()
+	signal.Ignore(os.Interrupt)
 	signal.Notify(c, os.Interrupt)
 
-	for {
-		fmt.Print(">>> ")
+	go handleSignals(c)
+}
 
-		go signalHandler(c)
+func handleSignals(c <-chan os.Signal) {
+	s := <-c
 
-		userInput, _ := reader.ReadString('\n')
+	fmt.Println("\nGot signal:", s)
+	fmt.Println(
+		"Type \"exit\" to quit the program or \"help\" to see" +
+			" the list of all available commands.")
+	fmt.Println()
 
-		if userInput == "" {
-			// Handling ctrl+d (EOF)
-			fmt.Println("\nGot signal: Ctrl+D")
-			fmt.Println(
-				"Type \"exit\" to quit the program or \"help\" to see" +
-					"the list of all available commands\"")
-			fmt.Println()
-			continue
-		}
+	go handleSignals(c)
+}
 
-		userInput = strings.ToLower(userInput)
-		userInput = strings.Replace(userInput, "\r", "", -1)
-		userInput = strings.Replace(userInput, "\n", "", -1)
-		parsedInput := strings.Fields(userInput)
+func promptForInput(reader *bufio.Reader) string {
+	fmt.Print(">>> ")
 
-		switch {
-		case len(parsedInput) == 0:
-			fmt.Println()
-		case parsedInput[0] == "help":
-			printHelp()
-		case parsedInput[0] == "hello":
-			fmt.Println("Greetings, User!")
-			fmt.Println()
-		case parsedInput[0] == "exit":
-			os.Exit(0)
-		default:
-			fmt.Println("I don't know that command, try using \"help\".")
-		}
+	userInput, _ := reader.ReadString('\n')
+	//if err != nil {
+	//	return "", fmt.Errorf("%w", err)
+	//}
+
+	return userInput
+}
+
+func serializeUserInput(userInput string) []string {
+	userInput = strings.ToLower(userInput)
+	userInput = strings.Replace(userInput, "\r", "", -1)
+	userInput = strings.Replace(userInput, "\n", "", -1)
+
+	return strings.Fields(userInput)
+}
+
+func decideOutput(userInput []string) {
+	switch {
+	case len(userInput) == 0:
+		fmt.Println()
+	case userInput[0] == "help":
+		printHelp()
+	case userInput[0] == "hello":
+		printHello()
+	case userInput[0] == "exit":
+		os.Exit(0)
+	default:
+		printUnknownCommand()
 	}
 }
 
@@ -62,12 +83,12 @@ func printHelp() {
 	fmt.Println()
 }
 
-func signalHandler(c <-chan os.Signal) {
-	s := <-c
-	fmt.Println("\nGot signal:", s)
-	fmt.Println(
-		"Type \"exit\" to quit the program or \"help\" to see" +
-			"the list of all available commands\"")
-	fmt.Print("\n>>> ")
-	go signalHandler(c)
+func printHello() {
+	fmt.Println("Greetings, User!")
+	fmt.Println()
+}
+
+func printUnknownCommand() {
+	fmt.Println("I don't know that command, try using \"help\".")
+	fmt.Println()
 }
