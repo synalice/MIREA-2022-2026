@@ -15,18 +15,29 @@ func main() {
 	signal.Notify(c, os.Interrupt)
 
 	reader := bufio.NewReader(os.Stdin)
+
+	var inputEndsWithNewline bool
+
 	for {
 		userInput := promptForInput(reader)
+
+		if userInput == "\n" {
+			inputEndsWithNewline = true
+		}
 
 		// This is needed to give time to `signal.Notify()` to send signal into the `c` channel if SIGINT was received.
 		time.Sleep(20 * time.Millisecond)
 
 		select {
 		case <-c:
-			fmt.Println("\nGot signal: SIGINT")
+			if !inputEndsWithNewline {
+				fmt.Print("\n")
+			}
+			fmt.Println("Got signal: SIGINT")
 			fmt.Println(
 				"Type \"exit\" to quit the program or \"help\" to see" +
 					" the list of all available commands.")
+			fmt.Println()
 		default:
 			serializedInput := serializeUserInput(userInput)
 			decideOutput(serializedInput)
