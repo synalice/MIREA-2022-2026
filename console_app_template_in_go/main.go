@@ -6,38 +6,32 @@ import (
 	"os"
 	"os/signal"
 	"strings"
+	"time"
 )
 
 func main() {
-	setupSignalHandling()
+	c := make(chan os.Signal, 1)
+	signal.Ignore(os.Interrupt)
+	signal.Notify(c, os.Interrupt)
 
 	reader := bufio.NewReader(os.Stdin)
 	for {
 		userInput := promptForInput(reader)
 
-		serializedInput := serializeUserInput(userInput)
-		decideOutput(serializedInput)
+		// This is needed to give time to `signal.Notify()` to send signal into the `c` channel if SIGINT was received.
+		time.Sleep(20 * time.Millisecond)
+
+		select {
+		case <-c:
+			fmt.Println("\nGot signal: SIGINT")
+			fmt.Println(
+				"Type \"exit\" to quit the program or \"help\" to see" +
+					" the list of all available commands.")
+		default:
+			serializedInput := serializeUserInput(userInput)
+			decideOutput(serializedInput)
+		}
 	}
-}
-
-func setupSignalHandling() {
-	c := make(chan os.Signal, 1)
-	signal.Ignore(os.Interrupt)
-	signal.Notify(c, os.Interrupt)
-
-	go handleSignals(c)
-}
-
-func handleSignals(c <-chan os.Signal) {
-	s := <-c
-
-	fmt.Println("\nGot signal:", s)
-	fmt.Println(
-		"Type \"exit\" to quit the program or \"help\" to see" +
-			" the list of all available commands.")
-	fmt.Println()
-
-	go handleSignals(c)
 }
 
 func promptForInput(reader *bufio.Reader) string {
@@ -53,6 +47,7 @@ func promptForInput(reader *bufio.Reader) string {
 
 func serializeUserInput(userInput string) []string {
 	userInput = strings.ToLower(userInput)
+	userInput = strings.Replace(userInput, "\t", "", -1)
 	userInput = strings.Replace(userInput, "\r", "", -1)
 	userInput = strings.Replace(userInput, "\n", "", -1)
 
