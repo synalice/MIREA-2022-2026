@@ -19,10 +19,13 @@ int main()
 
     cout << "Введите высоту: ";
     cin >> h;
-   
-    if (h < 0) {
+
+    if (h < 0)
+    {
         cout << "ERROR: высота не может быть отрицательной" << endl;
-    } else {
+    }
+    else
+    {
         cout << "V=" << (double)1 / 3 * M_PI * h * (R * R + R * r + r * r) << endl;
 
         double L = sqrt(h * h + pow((R - r), 2));

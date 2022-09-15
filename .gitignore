@@ -58,3 +58,6 @@ fabric.properties
 
 ### Project specific
 /console_app_template_in_go/bin/
+
+### VSCode
+.vscode/

@@ -8,7 +8,7 @@ int main()
 
     double a, b, c;
     
-    std::cout << "Введите a, b и с" << std::endl;
+    std::cout << "Введите a, b и с:" << std::endl;
     std::cin >> a >> b >> c;
 
     if (a != 0) {
