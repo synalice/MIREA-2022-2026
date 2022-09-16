@@ -1,6 +1,6 @@
 #include <iostream>
 
-int main()
+void main()
 {
 	double b;
 	std::cout << "Enter b: ";
@@ -26,6 +26,4 @@ int main()
 	{
 		std::cout << "Result: " << -c / b << std::endl;
 	}
-
-	return 0;
 }

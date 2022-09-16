@@ -1,6 +1,6 @@
 #include <iostream>
 
-int main()
+void main()
 {
 	std::cout << "Enter 1 for YES or 0 for NO" << std::endl;
 
@@ -25,6 +25,4 @@ int main()
 	{
 		std::cout << "It is dark inside!" << std::endl;
 	}
-
-	return 0;
 }

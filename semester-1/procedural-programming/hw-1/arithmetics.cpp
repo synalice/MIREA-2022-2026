@@ -1,6 +1,6 @@
 #include <iostream>
 
-int main()
+void main()
 {
 	double num1;
 	double num2;
