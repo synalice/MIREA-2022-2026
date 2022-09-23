@@ -1,18 +1,25 @@
 #include <iostream>
 #include <cmath>
+#include <clocale>
 
 using namespace std;
 
-void main()
+int main()
 {
     setlocale(LC_ALL, "Russian");
 
     for (double x = -4; x <= 4; x += 0.5)
     {
         double y = (x * x - 2 * x + 2) / (x - 1);
-        if (abs(y) != 1.0 / 0)
-            printf("y(%f)=%f\n", x, y);
+        if (x == 1)
+        {
+            printf("y(%4.1f) не определён\n", x);
+        }
         else
-            printf("y(%f) не определен\n", x);
+        {
+            printf("y(%4.1f) = %g\n", x, y);
+        }
     }
+
+    return 0;
 }
