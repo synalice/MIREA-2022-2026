@@ -56,6 +56,9 @@ fabric.properties
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
+### Python
+venv/
+
 ### Project specific
 /console_app_template_in_go/bin/
 
