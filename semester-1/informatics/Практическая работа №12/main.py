@@ -48,6 +48,8 @@ def input_matrix_size():
 	while True:
 		try:
 			matrix_size = input("[размер]>>> ")
+			# Пытаемся преобразовать ввод пользователя к числу. Если не
+			# получается, то обрабатываем ошибку и просим заново ввести число.
 			matrix_size = int(matrix_size)
 			if SMALLEST_MATRIX_SIZE <= matrix_size <= BIGGEST_MATRIX_SIZE:
 				break
@@ -64,6 +66,21 @@ def input_matrix_size():
 			)
 			continue
 	return matrix_size
+
+
+def input_row_by_row(matrix_size):
+	"""
+	Функция inputted_row обрабатывает ввод пользователем строк матрицы.
+	"""
+	hand_filled_matrix = []
+	for row in range(matrix_size):
+		inputted_row = input("").split()
+		validated_row = validate_inputted_row(inputted_row, matrix_size)
+		if not validated_row:
+			return False
+		else:
+			hand_filled_matrix.append(validated_row)
+	return hand_filled_matrix
 
 
 def validate_inputted_row(inputted_row, matrix_size):
@@ -93,6 +110,22 @@ def validate_inputted_row(inputted_row, matrix_size):
 	return validated_row
 
 
+def rand_m():
+	"""
+	Функция rand_m отвечает за генерацию матрицы, заполненной случайными числами
+	"""
+	matrix_size = input_matrix_size()
+	# Генерируем квадратную матрицу размером matrix_size с случайными
+	# числами от SMALLEST_MATRIX_ELEMENT (1) и до BIGGEST_MATRIX_ELEMENT (100)
+	random_matrix = (np.random.randint(
+		SMALLEST_MATRIX_ELEMENT,
+		# Прибавляем 1 так как число берётся не включительно
+		BIGGEST_MATRIX_ELEMENT + 1,
+		(matrix_size, matrix_size)
+	))
+	return random_matrix
+
+
 def hand_m():
 	"""
 	Функция hand_m обрабатывает ввод матрицы в ручном режиме.
@@ -112,36 +145,7 @@ def hand_m():
 
 	# Преобразуем вложенный массив в более удобный массив библиотеки numpy
 	hand_filled_matrix = np.array(hand_filled_matrix)
-
-	print_original_matrix_and_1d_array(hand_filled_matrix)
-
-
-def input_row_by_row(matrix_size):
-	"""
-	Функция inputted_row обрабатывает ввод пользователем строк матрицы.
-	"""
-	hand_filled_matrix = []
-	for row in range(matrix_size):
-		inputted_row = input("").split()
-		validated_row = validate_inputted_row(inputted_row, matrix_size)
-		if not validated_row:
-			return False
-		else:
-			hand_filled_matrix.append(validated_row)
 	return hand_filled_matrix
-
-
-def rand_m():
-	"""
-	Функция rand_m отвечает за генерацию матрицы, заполненной случайными числами
-	"""
-	matrix_size = input_matrix_size()
-	random_matrix = (np.random.randint(
-		SMALLEST_MATRIX_ELEMENT,
-		BIGGEST_MATRIX_ELEMENT + 1,
-		(matrix_size, matrix_size)
-	))
-	print_original_matrix_and_1d_array(random_matrix)
 
 
 def print_original_matrix_and_1d_array(matrix: np.ndarray):
@@ -176,9 +180,11 @@ def main():
 			case "help":
 				print_help()
 			case "rand":
-				rand_m()
+				random_matrix = rand_m()
+				print_original_matrix_and_1d_array(random_matrix)
 			case "hand":
-				hand_m()
+				hand_filled_matrix = hand_m()
+				print_original_matrix_and_1d_array(hand_filled_matrix)
 			case "exit":
 				exit()
 			case _:  # Пользователь ввёл что-то неизвестное
