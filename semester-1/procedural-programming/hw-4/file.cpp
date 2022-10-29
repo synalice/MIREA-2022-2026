@@ -8,31 +8,33 @@ using namespace std;
 
 
 int main() {
-  setlocale(LC_ALL, "Russian");
+	setlocale(LC_ALL, "Russian");
 
-  // Генерация случайных чисел
-  std::random_device dev;
-  std::mt19937 rng(dev());
-  std::uniform_int_distribution<std::mt19937::result_type> dist6(1, 10);
-  
-  // "Создать файл, записать в него 10 чисел..."
-  fstream file;
-  file.open("C:\\Users\\Professional\\Desktop\\file.txt", ios::out);
-  for (int i = 0; i < 10; i++) {
-    file << dist6(rng) << endl;
-  }
-  file.close();
+	// "Создать файл, записать в него 10 чисел..."
+	fstream file;
+	file.open("C:\\Users\\Professional\\Desktop\\file.txt", ios::out);
+	for (int i = 1; i <= 10; i++) {
+	    printf("Введите число %2d: ", i);
+	    double user_input{};
+	    cin >> user_input;
+	    file << user_input << endl;
+	}
+	file.close();
 
-  // "...закрыть, потом вновь открыть файл и найти сумму чисел."
-  file.open("C:\\Users\\Professional\\Desktop\\file.txt", ios::in);
-  int total_sum = 0;
-  string line;
-  while (getline(file, line))
-  {
-    total_sum = total_sum + stoi(line);
-  }
+	setlocale(LC_ALL, "English");
 
-  cout << "Сумма чисел в созданном файле: " << total_sum << endl;
+	// "...закрыть, потом вновь открыть файл и найти сумму чисел."
+	file.open("C:\\Users\\Professional\\Desktop\\file.txt", ios::in);
+	double total_sum = 0;
+	string line;
+	while (getline(file, line))
+	{
+		double stoded = stod(line);
+		total_sum = total_sum + stoded;
+	}
 
-  return 0;
+	setlocale(LC_ALL, "Russian");
+	cout << "Сумма чисел в созданном файле: " << total_sum << endl;
+
+	return 0;
 }
