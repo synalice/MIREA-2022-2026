@@ -2,10 +2,14 @@ import keyboard
 import numpy as np
 
 """Константы программы"""
-SMALLEST_MATRIX_SIZE = 2  # минимальный допустимый размер матрицы
-BIGGEST_MATRIX_SIZE = 5  # максимальный допустимый размер матрицы
-SMALLEST_MATRIX_ELEMENT = 1  # минимальный допустимый размер элементов в матрице
-BIGGEST_MATRIX_ELEMENT = 100  # максимальный допустимый размер элементов в матрице
+# Минимальный допустимый размер матрицы
+SMALLEST_MATRIX_SIZE = 2
+# Максимальный допустимый размер матрицы
+BIGGEST_MATRIX_SIZE = 5
+# Минимальный допустимый размер элементов в матрице
+SMALLEST_MATRIX_ELEMENT = 1
+# Максимальный допустимый размер элементов в матрице
+BIGGEST_MATRIX_ELEMENT = 100
 
 
 def print_help():
@@ -40,7 +44,7 @@ def input_matrix_size():
 	и обрабатывает ошибки при вводе.
 	"""
 	print(
-		f"Введите размер квадратной матрицы MxM, где M является целым числом"
+		f"Введите размер квадратной матрицы MxM, где M является целым числом "
 		f"из диапазона [{SMALLEST_MATRIX_SIZE}, {BIGGEST_MATRIX_SIZE}]"
 	)
 	print("(для выхода из ввода размера напишите \"exit\")")
@@ -97,7 +101,8 @@ def validate_inputted_row(inputted_row, matrix_size):
 			if i > BIGGEST_MATRIX_ELEMENT or i < SMALLEST_MATRIX_ELEMENT:
 				print(
 					f"ОШИБКА: Все элементы матрицы должны быть целыми числами "
-					f"в диапазоне [{SMALLEST_MATRIX_ELEMENT}, {BIGGEST_MATRIX_ELEMENT}]"
+					f"в диапазоне "
+					f"[{SMALLEST_MATRIX_ELEMENT}, {BIGGEST_MATRIX_ELEMENT}]"
 				)
 				return
 	except ValueError:
@@ -118,10 +123,8 @@ def rand_m():
 	# Генерируем квадратную матрицу размером matrix_size с случайными
 	# числами от SMALLEST_MATRIX_ELEMENT (1) и до BIGGEST_MATRIX_ELEMENT (100)
 	random_matrix = (np.random.randint(
-		SMALLEST_MATRIX_ELEMENT,
-		# Прибавляем 1 так как число берётся не включительно
-		BIGGEST_MATRIX_ELEMENT + 1,
-		(matrix_size, matrix_size)
+		SMALLEST_MATRIX_ELEMENT, # Прибавляем 1 так как число берётся не включительно
+		BIGGEST_MATRIX_ELEMENT + 1, (matrix_size, matrix_size)
 	))
 	return random_matrix
 
@@ -138,8 +141,11 @@ def hand_m():
 	while True:
 		print("--------начало--------")
 		hand_filled_matrix = input_row_by_row(matrix_size)
+
+		# Проверка, если при вводе строки произошла ошибка
 		if not hand_filled_matrix:
 			continue
+
 		print("--------конец---------")
 		break
 
@@ -148,7 +154,7 @@ def hand_m():
 	return hand_filled_matrix
 
 
-def print_original_matrix_and_1d_array(matrix: np.ndarray):
+def print_original_matrix_and_1d_array(matrix):
 	"""
 	Функция print_original_matrix_and_1d_array выводит в консоль сначала
 	исходную матрицу, а затем матрицу, преобразованную в одномерный массив,
@@ -158,9 +164,16 @@ def print_original_matrix_and_1d_array(matrix: np.ndarray):
 	print()
 	print("Ваша матрица:")
 	print(matrix)
+
+	# "Сплющиваем" матрицу до одномерного массива
 	matrix_in_1d = list(matrix.flatten())
-	even_elems = sorted([num for num in matrix_in_1d if num % 2 == 0])
-	odd_elems = sorted([num for num in matrix_in_1d if num % 2 == 1], reverse=True)
+
+	even_elems = sorted(
+		[num for num in matrix_in_1d if num % 2 == 0]
+	)
+	odd_elems = sorted(
+		[num for num in matrix_in_1d if num % 2 == 1], reverse=True
+	)
 	print()
 	print("Матрица в виде одномерного массива:")
 	print([*even_elems, *odd_elems])
