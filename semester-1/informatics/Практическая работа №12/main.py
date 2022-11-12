@@ -81,21 +81,33 @@ def input_row_by_row(matrix_size):
 	"""
 	Функция inputted_row обрабатывает ввод пользователем строк матрицы.
 	"""
+	error_happened_during_input = False
 	hand_filled_matrix = []
+	print("--------начало--------")
 	for row in range(matrix_size):
-		try:
-			inputted_row = input("").split()
-		except KeyboardInterrupt:
-			print("ОШИБКА: Неверный ввод")
-			return False
-		except EOFError:
-			print("ОШИБКА: Неверный ввод")
-			return False
-		validated_row = validate_inputted_row(inputted_row, matrix_size)
-		if not validated_row:
-			return False
-		else:
-			hand_filled_matrix.append(validated_row)
+		while True:
+			try:
+				if error_happened_during_input:
+					print("--------начало--------")
+					for i in hand_filled_matrix:
+						print(*i, sep=" ")
+				inputted_row = input("").split()
+			except KeyboardInterrupt:
+				print("ОШИБКА: Неверный ввод, попробуйте снова")
+				continue
+			except EOFError:
+				print("ОШИБКА: Неверный ввод, попробуйте снова")
+				continue
+			validated_row = validate_inputted_row(inputted_row, matrix_size)
+			if not validated_row:
+				print("Введите строку заново")
+				error_happened_during_input = True
+				continue
+			else:
+				hand_filled_matrix.append(validated_row)
+				error_happened_during_input = False
+				break
+	print("--------конец---------")
 	return hand_filled_matrix
 
 
@@ -151,17 +163,7 @@ def hand_m():
 		f"Ведите через пробел элементы матрицы - целые числа в диапазоне "
 		f"[{SMALLEST_MATRIX_ELEMENT}, {BIGGEST_MATRIX_ELEMENT}]: "
 	)
-	while True:
-		print("--------начало--------")
-		hand_filled_matrix = input_row_by_row(matrix_size)
-
-		# Проверка, если при вводе строки произошла ошибка
-		if not hand_filled_matrix:
-			continue
-
-		print("--------конец---------")
-		break
-
+	hand_filled_matrix = input_row_by_row(matrix_size)
 	# Преобразуем вложенный массив в более удобный массив библиотеки numpy
 	hand_filled_matrix = np.array(hand_filled_matrix)
 	return hand_filled_matrix
