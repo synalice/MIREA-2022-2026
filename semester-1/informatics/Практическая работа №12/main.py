@@ -1,4 +1,3 @@
-import keyboard
 import numpy as np
 
 """Константы программы"""
@@ -47,7 +46,6 @@ def input_matrix_size():
 		f"Введите размер квадратной матрицы MxM, где M является целым числом "
 		f"из диапазона [{SMALLEST_MATRIX_SIZE}, {BIGGEST_MATRIX_SIZE}]"
 	)
-	print("(для выхода из ввода размера напишите \"exit\")")
 	matrix_size = None
 	while True:
 		try:
@@ -69,6 +67,13 @@ def input_matrix_size():
 				f"из диапазона [{SMALLEST_MATRIX_SIZE}, {BIGGEST_MATRIX_SIZE}]"
 			)
 			continue
+		except KeyboardInterrupt:
+			print()
+			print("ОШИБКА: Введите размер заново")
+			continue
+		except EOFError:
+			print("ОШИБКА: Введите размер заново")
+			continue
 	return matrix_size
 
 
@@ -78,7 +83,14 @@ def input_row_by_row(matrix_size):
 	"""
 	hand_filled_matrix = []
 	for row in range(matrix_size):
-		inputted_row = input("").split()
+		try:
+			inputted_row = input("").split()
+		except KeyboardInterrupt:
+			print("ОШИБКА: Неверный ввод")
+			return False
+		except EOFError:
+			print("ОШИБКА: Неверный ввод")
+			return False
 		validated_row = validate_inputted_row(inputted_row, matrix_size)
 		if not validated_row:
 			return False
@@ -107,7 +119,7 @@ def validate_inputted_row(inputted_row, matrix_size):
 				return
 	except ValueError:
 		print(
-			f"ОШИБКА: Все элементы матрицы должны быть целыми числами"
+			f"ОШИБКА: Все элементы матрицы должны быть целыми числами "
 			f"в диапазоне [{SMALLEST_MATRIX_ELEMENT}, {BIGGEST_MATRIX_ELEMENT}]"
 		)
 		return False
@@ -123,7 +135,8 @@ def rand_m():
 	# Генерируем квадратную матрицу размером matrix_size с случайными
 	# числами от SMALLEST_MATRIX_ELEMENT (1) и до BIGGEST_MATRIX_ELEMENT (100)
 	random_matrix = (np.random.randint(
-		SMALLEST_MATRIX_ELEMENT, # Прибавляем 1 так как число берётся не включительно
+		# Прибавляем 1 так как число берётся не включительно
+		SMALLEST_MATRIX_ELEMENT,
 		BIGGEST_MATRIX_ELEMENT + 1, (matrix_size, matrix_size)
 	))
 	return random_matrix
@@ -135,7 +148,7 @@ def hand_m():
 	"""
 	matrix_size = input_matrix_size()
 	print(
-		f"Ведите через пробел элементы матрицы - числа в диапазоне "
+		f"Ведите через пробел элементы матрицы - целые числа в диапазоне "
 		f"[{SMALLEST_MATRIX_ELEMENT}, {BIGGEST_MATRIX_ELEMENT}]: "
 	)
 	while True:
@@ -180,12 +193,20 @@ def print_original_matrix_and_1d_array(matrix):
 
 
 def main():
-	keyboard.block_key("ctrl")  # Блокируем клавишу ctrl
+	# keyboard.block_key("ctrl")  # Блокируем клавишу ctrl
 
 	print("Напишите \"help\", чтобы узнать, что я умею!")
 
 	while True:
-		user_input = input("\n[меню]>>> ")  # Считываем ввод пользователя
+		try:
+			user_input = input("\n[меню]>>> ")  # Считываем ввод пользователя
+		except KeyboardInterrupt:
+			print()
+			unknown_command()
+			continue
+		except EOFError:
+			unknown_command()
+			continue
 
 		# Программа определяет, что ей делать, вызывая нужную функцию,
 		# в зависимости от ввода пользователя
@@ -205,7 +226,4 @@ def main():
 
 
 if __name__ == '__main__':
-	try:
-		main()
-	except KeyboardInterrupt:  # Ловим ошибку прерывания программы, в качестве дополнительной защиты от Ctrl+C
-		pass
+	main()
