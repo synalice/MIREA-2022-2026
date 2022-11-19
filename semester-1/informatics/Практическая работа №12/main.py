@@ -94,9 +94,11 @@ def input_row_by_row(matrix_size):
                 inputted_row = input("").split()
             except KeyboardInterrupt:
                 print("ОШИБКА: Неверный ввод, попробуйте снова")
+                error_happened_during_input = True
                 continue
             except EOFError:
                 print("ОШИБКА: Неверный ввод, попробуйте снова")
+                error_happened_during_input = True
                 continue
             validated_row = validate_inputted_row(inputted_row, matrix_size)
             if not validated_row:
