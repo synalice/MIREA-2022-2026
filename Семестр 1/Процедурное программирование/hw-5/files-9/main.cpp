@@ -56,27 +56,47 @@ vector<double> ConvertVecStrToVecDouble(vector<string> v) {
 }
 
 int main() {
-	fstream fileA;
-	fstream fileB;
-	ofstream fileC;
+	fstream readFileA;
+	readFileA.open("textfilea.txt");
+	fstream readFileB;
+	readFileB.open("textfileB.txt");
+	ofstream writeFileC;
+	writeFileC.open("textfileC.txt");
 
-	fileA.open("textfilea.txt");
-	fileB.open("textfileB.txt");
-	fileC.open("textfileC.txt");
-	
-	string fileAContents((istreambuf_iterator<char>(fileA)), istreambuf_iterator<char>());
-	string fileBContents((istreambuf_iterator<char>(fileB)), istreambuf_iterator<char>());
-	
-	string fileAPlusFileB = fileAContents + " " + fileBContents;
-	vector<string> splittedElems = SplitInputBySpace(fileAPlusFileB);
+	string fileAContents((istreambuf_iterator<char>(readFileA)), istreambuf_iterator<char>());
+	string fileBContents((istreambuf_iterator<char>(readFileB)), istreambuf_iterator<char>());
+
+	readFileA.close();
+	readFileB.close();
+
+	fstream writeFileA;
+	writeFileA.open("textfilea.txt");
+	fstream writeFileB;
+	writeFileB.open("textfileB.txt");
+
+	vector<string> aSplittedElems = SplitInputBySpace(fileAContents);
+	vector<double> aElemsAsDouble = ConvertVecStrToVecDouble(aSplittedElems);
+	sort(aElemsAsDouble.begin(), aElemsAsDouble.end());
+
+	for (double elem : aElemsAsDouble) 
+		writeFileA << elem << " ";
+	writeFileA.close();
+
+	vector<string> bSplittedElems = SplitInputBySpace(fileBContents);
+	vector<double> bElemsAsDouble = ConvertVecStrToVecDouble(bSplittedElems);
+	sort(bElemsAsDouble.begin(), bElemsAsDouble.end());
+
+	for (double elem : bElemsAsDouble)
+		writeFileB << elem << " ";
+	writeFileB.close();
+
+	string aPlusB = fileAContents + " " + fileBContents;
+
+	vector<string> splittedElems = SplitInputBySpace(aPlusB);
 	vector<double> elemsAsDouble = ConvertVecStrToVecDouble(splittedElems);
-
 	sort(elemsAsDouble.begin(), elemsAsDouble.end());
-	for (double elem : elemsAsDouble) {
-		fileC << elem << " ";
-	}
 
-	fileA.close();
-	fileB.close();
-	fileC.close();
+	for (double elem : elemsAsDouble)
+		writeFileC << elem << " ";
+	writeFileC.close();
 }
