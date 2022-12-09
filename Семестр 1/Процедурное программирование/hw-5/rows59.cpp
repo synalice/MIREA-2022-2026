@@ -193,8 +193,8 @@ allSaddlePoints FindSaddlePoint(vector<vector<double>> matrix, matrixParams mp) 
 		for (int j = 0; j < mp.cols; j++) {
 			if (matrix[i][j] == minElem) {
 				min.value = matrix[i][j];
-				min.coords.first = i;
-				min.coords.second = j;
+				min.coords.first = i+1;
+				min.coords.second = j+1;
 			}
 		}
 		smallestElems.push_back(min.value);
@@ -215,8 +215,8 @@ allSaddlePoints FindSaddlePoint(vector<vector<double>> matrix, matrixParams mp) 
 		for (int j = 0; j < mp.rows; j++) {
 			if (matrix[j][i] == maxElemInEachCol[i]) {
 				max.value = matrix[j][i];
-				max.coords.first = j;
-				max.coords.second = i;
+				max.coords.first = j+1;
+				max.coords.second = i+1;
 			}
 			biggestElems.push_back(max.value);
 			biggestPoints.push_back(max);
@@ -248,10 +248,7 @@ allSaddlePoints FindSaddlePoint(vector<vector<double>> matrix, matrixParams mp) 
 	}
 }
 
-int main() {
-	matrixParams mp = GetMatrixParams();
-	vector<vector<double>> matrix = GetMatrix(mp.rows, mp.cols);
-	allSaddlePoints ap = FindSaddlePoint(matrix, mp);
+void PrintSaddlePoint(allSaddlePoints ap) {
 	if (ap.value != -1) {
 		cout << endl;
 		cout << "Седловая точка равна " << ap.value << endl;
@@ -264,4 +261,11 @@ int main() {
 	else {
 		cout << "Седловая точка отсутствует" << endl;
 	}
+}
+
+int main() {
+	matrixParams mp = GetMatrixParams();
+	vector<vector<double>> matrix = GetMatrix(mp.rows, mp.cols);
+	allSaddlePoints ap = FindSaddlePoint(matrix, mp);
+	PrintSaddlePoint(ap);
 }
