@@ -6,7 +6,10 @@
 typedef int teacher;
 typedef int student;
 
-std::vector<std::string> SplitInputBySpace(std::string str) {
+/**
+* Разделяет строку по пробелам и табам.
+*/
+std::vector<std::string> SplitStrBySpace(std::string str) {
 	constexpr auto UNINITIALIZED = -1;
 
 	std::vector<std::string> elems;
@@ -40,6 +43,9 @@ std::vector<std::string> SplitInputBySpace(std::string str) {
 	return elems;
 }
 
+/**
+* Проверяет, верность ввода монахов.
+*/
 bool InputIsValid(std::vector<std::string> input) {
 	if (input.size() != 4) {
 		std::cerr << "ОШИБКА: Неверное кол-во монахов" << std::endl;
@@ -48,6 +54,9 @@ bool InputIsValid(std::vector<std::string> input) {
 	return true;
 }
 
+/**
+* Преобразует вектор строк к вектору чисел.
+*/
 std::vector<int> VecStrToVecInt(std::vector<std::string> vec) {
 	std::vector<int> result;
 	for (std::string s : vec) {
@@ -61,13 +70,17 @@ std::vector<int> VecStrToVecInt(std::vector<std::string> vec) {
 	return result;
 }
 
+/**
+* Функция отвечает за ввод пользователем всех монахов. Ввод прекращается при
+* вводе монаха под номером один (1).
+*/
 void FillMonks(std::unordered_map<student, teacher>* monk_map) {
 	std::cout << "Введите исходные данные о монахах:" << std::endl;
 
 	std::string input;
 	while (true) {
 		getline(std::cin, input);
-		std::vector<std::string> splitted_input = SplitInputBySpace(input);
+		std::vector<std::string> splitted_input = SplitStrBySpace(input);
 		if (InputIsValid(splitted_input) == false) {
 			continue;
 		}
@@ -86,6 +99,11 @@ void FillMonks(std::unordered_map<student, teacher>* monk_map) {
 	}
 }
 
+/**
+* Функция находит учителя выбранного монаха, учителя его учителя и т.д. до
+* монаха под номером один (1). Все учителя записываются в единый массив
+* `teachers`.
+*/
 void FindTeachers(std::unordered_map<student, teacher>* monk_map, int monk, std::vector<teacher>* teachers) {
 
 	try {
@@ -102,6 +120,9 @@ void FindTeachers(std::unordered_map<student, teacher>* monk_map, int monk, std:
 	}
 }
 
+/**
+* Функция проверяет, является ли указанный номер существующим монахом.
+*/
 bool IsMonk(std::unordered_map<student, teacher> monk_map, int monk) {
 	try {
 		(void)monk_map.at(monk);
@@ -113,7 +134,10 @@ bool IsMonk(std::unordered_map<student, teacher> monk_map, int monk) {
 	}
 }
 
-void SubProgramOne(std::unordered_map<student, teacher> monk_map, std::vector<int> params) {
+/**
+* Функция отвечает за обработку подпрограммы один (1) (см. условие задачи).
+*/
+void SubProgrammOne(std::unordered_map<student, teacher> monk_map, std::vector<int> params) {
 	int monk = params[0];
 
 	if (IsMonk(monk_map, monk) == false) {
@@ -134,7 +158,10 @@ void SubProgramOne(std::unordered_map<student, teacher> monk_map, std::vector<in
 	}
 }
 
-void SubProgramTwo(std::unordered_map<student, teacher> monk_map, std::vector<int> params) {
+/**
+* Функция отвечает за обработку подпрограммы два (2) (см. условие задачи).
+*/
+void SubProgrammTwo(std::unordered_map<student, teacher> monk_map, std::vector<int> params) {
 	for (int monk : params) {
 		if (IsMonk(monk_map, monk) == false) {
 			std::cout << monk << " - не монах" << std::endl;
@@ -170,18 +197,24 @@ void SubProgramTwo(std::unordered_map<student, teacher> monk_map, std::vector<in
 	}
 }
 
-struct subProgramChoice {
-	int program;
+/**
+* Структура хранит в себе номер выбранной подпрограммы и её параметры.
+*/
+struct subProgrammChoice {
+	int programm;
 	std::vector<int> params;
 };
 
-subProgramChoice ChooseSubProgram() {
+/**
+* Функция отвечает за то, какую подпрограмму выбирает пользователь.
+*/
+subProgrammChoice ChooseSubProgramm() {
 	while (true)
 	{
-		std::cout << "Выберите желаемую задачу (1 или 2): " << std::endl;
+		std::cout << "Выберите жедаемую задачу (1 или 2): " << std::endl;
 		std::string input;
 		getline(std::cin, input);
-		std::vector<std::string> splitted_input = SplitInputBySpace(input);
+		std::vector<std::string> splitted_input = SplitStrBySpace(input);
 		std::vector<int> input_as_int = VecStrToVecInt(splitted_input);
 
 		std::vector<int> params(input_as_int.begin() + 1, input_as_int.end());
@@ -210,16 +243,16 @@ subProgramChoice ChooseSubProgram() {
 int main()
 {
 	std::unordered_map<student, teacher> monk_map;
-	FillMonks(&monk_map);
-	subProgramChoice pc = ChooseSubProgram();
+	FillMonks(&monk_map); // Заполняет программу монахами
+	subProgrammChoice pc = ChooseSubProgramm(); // Выбирает подпрограмму
 
-	switch (pc.program)
+	switch (pc.programm)
 	{
 	case 1:
-		SubProgramOne(monk_map, pc.params);
+		SubProgrammOne(monk_map, pc.params);
 		break;
 	case 2:
-		SubProgramTwo(monk_map, pc.params);
+		SubProgrammTwo(monk_map, pc.params);
 		break;
 	default:
 		break;
