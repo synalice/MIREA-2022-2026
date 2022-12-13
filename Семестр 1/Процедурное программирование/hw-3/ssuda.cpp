@@ -18,8 +18,7 @@ T input(string message)
 
 int main()
 {
-
-	setlocale(LC_ALL, "Russian");
+	setlocale(LC_ALL, "ru_RU.UTF-8");
 
 	double S = input<double>("Введите сумму займа (S)");
 	while (S < 0)

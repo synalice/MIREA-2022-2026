@@ -8,7 +8,7 @@ using namespace std;
 
 
 int main() {
-	setlocale(LC_ALL, "Russian");
+	setlocale(LC_ALL, "ru_RU.UTF-8");
 
 	// "Создать файл, записать в него 10 чисел..."
 	fstream file;

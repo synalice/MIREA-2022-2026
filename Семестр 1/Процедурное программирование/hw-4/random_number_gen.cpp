@@ -1,10 +1,13 @@
 ﻿#include <iostream>
 #include <time.h>
+#include <clocale>
+
 using namespace std;
 
 void big()
 {
-	setlocale(0, "");
+	setlocale(LC_ALL, "ru_RU.UTF-8");
+	
 	int m, i, c, S0, S1, b;
 	m = 25173;
 	c = 65537;

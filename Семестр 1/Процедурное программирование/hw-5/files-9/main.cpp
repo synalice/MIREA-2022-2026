@@ -3,12 +3,13 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-
-constexpr auto UNINITIALIZED = -1;
+#include <clocale>
 
 using namespace std;
 
 vector<string> SplitInputBySpace(string row) {
+	constexpr auto UNINITIALIZED = -1;
+	
 	vector<string> rowElems;
 	int tokenStart = UNINITIALIZED;
 	int tokenEnd = UNINITIALIZED;
@@ -56,6 +57,8 @@ vector<double> ConvertVecStrToVecDouble(vector<string> v) {
 }
 
 int main() {
+	setlocale(LC_ALL, "ru_RU.UTF-8");
+	
 	fstream readFileA;
 	readFileA.open("textfilea.txt");
 	fstream readFileB;

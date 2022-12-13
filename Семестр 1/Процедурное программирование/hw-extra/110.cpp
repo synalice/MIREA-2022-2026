@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <string>
 #include <algorithm>
+#include <clocale>
 
 typedef int teacher;
 typedef int student;
@@ -254,6 +255,8 @@ subProgrammChoice ChooseSubProgramm() {
 
 int main()
 {
+	std::setlocale(LC_ALL, "ru_RU.UTF-8");
+
 	std::unordered_map<student, teacher> monk_map;
 	FillMonks(&monk_map); // Заполняет программу монахами
 	subProgrammChoice pc = ChooseSubProgramm(); // Выбирает подпрограмму

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <clocale>
 
 using namespace std;
 
@@ -83,7 +84,7 @@ int Decoder(string a) {
 }
 
 int main() {
-	setlocale(0, "");
+	setlocale(LC_ALL, "ru_RU.UTF-8");
 
 	string b;
 	cout << "Введите число:" << endl;

@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-    setlocale(LC_ALL, "Russian");
+    setlocale(LC_ALL, "ru_RU.UTF-8");
 
     for (double x = -4; x <= 4; x += 0.5)
     {

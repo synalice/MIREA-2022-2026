@@ -1,7 +1,10 @@
 #include <iostream>
+#include <clocale>
 
 void main()
 {
+	std::setlocale(LC_ALL, "ru_RU.UTF-8");
+	
 	std::cout << "Enter 1 for YES or 0 for NO" << std::endl;
 
 	int day;

@@ -2,11 +2,14 @@
 #include <cmath>
 #include <vector>
 #include <set>
+#include <clocale>
 
 using namespace std;
 
 int main()
 {
+	setlocale(LC_ALL, "ru_RU.UTF-8");
+	
 	int a1 = 0;
 	int a2 = 0;
 

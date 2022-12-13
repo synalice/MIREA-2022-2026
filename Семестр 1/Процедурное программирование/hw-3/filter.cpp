@@ -15,10 +15,13 @@
 #include <ctype.h>
 #include <algorithm>
 #include <sstream>
+
 using namespace std;
 
 int main()
 {
+	setlocale(LC_ALL, "ru_RU.UTF-8");
+	
 	fstream file;
 	file.open("C:\\Users\\Professional\\git\\MIREA-2022-2026\\semester-1\\procedural-programming\\hw-3\\filter.cpp\\34.txt", ios::in);
 	if (file.is_open())

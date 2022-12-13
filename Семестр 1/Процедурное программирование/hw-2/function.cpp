@@ -15,7 +15,8 @@ T input(string message)
 
 void main()
 {
-    setlocale(LC_ALL, "Russian");
+    setlocale(LC_ALL, "ru_RU.UTF-8");
+
     auto x = input<double>("Введите x");
     auto y = input<double>("Введите y");
     auto b = input<double>("Введите b");

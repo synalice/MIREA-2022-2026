@@ -28,7 +28,7 @@ string determineNumSign(int input) {
 }
 
 int main() {
-  setlocale(LC_ALL, "Russian");
+  setlocale(LC_ALL, "ru_RU.UTF-8");
 
   double user_input = getInputFromUser();
   string sign = determineNumSign(user_input);

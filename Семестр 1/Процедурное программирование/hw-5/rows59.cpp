@@ -3,6 +3,7 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include <clocale>
 
 constexpr auto UNINITIALIZED = -1;
 
@@ -264,6 +265,8 @@ void PrintSaddlePoint(allSaddlePoints ap) {
 }
 
 int main() {
+	setlocale(LC_ALL, "ru_RU.UTF-8");
+	
 	matrixParams mp = GetMatrixParams();
 	vector<vector<double>> matrix = GetMatrix(mp.rows, mp.cols);
 	allSaddlePoints ap = FindSaddlePoint(matrix, mp);

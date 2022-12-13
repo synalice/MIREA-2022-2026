@@ -2,6 +2,7 @@
 #include <random>
 #include <set>
 #include <vector>
+#include <clocale>
 
 std::vector<int> GenerateRandomNumber() {
     std::set<int> result;
@@ -74,6 +75,8 @@ void PrintResults(std::vector<int> random_number, std::vector<int> user_guess) {
 
 int main()
 {
+    std::setlocale(LC_ALL, "ru_RU.UTF-8");
+
     std::vector<int> random_number = GenerateRandomNumber();
     PrintRandomNumber(random_number);
     std::vector<int> user_guess = GetUserInput();

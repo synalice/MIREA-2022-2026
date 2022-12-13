@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <clocale>
 
 using namespace std;
 
@@ -26,6 +27,8 @@ double FindA(int n, int x) {
 }
 
 int main() {
+	setlocale(LC_ALL, "ru_RU.UTF-8");
+	
 	double x{}, epsilon{};
 	cout << "Введите числа x и эпсилон: ";
 	cin >> x >> epsilon;

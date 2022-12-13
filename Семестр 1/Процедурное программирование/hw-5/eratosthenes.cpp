@@ -1,11 +1,14 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <clocale>
 
 using namespace std;
 
 int main()
 {
+	setlocale(LC_ALL, "ru_RU.UTF-8");
+	
 	cout << "Решето Эратосфена" << endl;
 	int n;
 	cout << "Введите натуральное число начиная от 2: ";

@@ -1,10 +1,13 @@
 ﻿#include <iostream>
 #include <cmath>
+#include <clocale>
 
 using namespace std;
 
 int main()
 {
+	setlocale(LC_ALL, "ru_RU.UTF-8");
+	
 	int SellerAndQuantity[3][4] = {
 		5,  2,  0, 10,
 		3,  5,  2,  5,

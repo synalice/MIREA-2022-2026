@@ -1,7 +1,10 @@
 #include <iostream>
+#include <clocale>
 
 void main()
 {
+	std::setlocale(LC_ALL, "ru_RU.UTF-8");
+
 	double num1;
 	double num2;
 

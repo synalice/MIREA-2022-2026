@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <clocale>
 
 using namespace std;
 
@@ -29,6 +30,8 @@ void nod(int a, int b)
 
 int main()
 {
+	setlocale(LC_ALL, "ru_RU.UTF-8");
+	
 	cout << "Алгоритм евклида" << endl;
 	int a, b;
 	cout << "Введите числа a и b: ";

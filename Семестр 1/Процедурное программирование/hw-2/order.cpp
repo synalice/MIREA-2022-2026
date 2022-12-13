@@ -15,7 +15,8 @@ T input(string message)
 
 void main()
 {
-    setlocale(LC_ALL, "Russian");
+    setlocale(LC_ALL, "ru_RU.UTF-8");
+
     auto N = input<double>("Введите число N");
 
     for (int i = 0; i < 10; i++)

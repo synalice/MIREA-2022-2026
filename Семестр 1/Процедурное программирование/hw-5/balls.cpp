@@ -1,10 +1,13 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <clocale>
 
 using namespace std;
 
 int main() {
+	setlocale(LC_ALL, "ru_RU.UTF-8");
+	
 	int result = 0;
 	int numOfBalls{};
 	vector<int> balls{};

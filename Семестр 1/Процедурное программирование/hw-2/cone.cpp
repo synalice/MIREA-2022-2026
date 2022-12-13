@@ -8,7 +8,8 @@ using namespace std;
 
 void main()
 {
-    setlocale(LC_ALL, "Russian");
+    setlocale(LC_ALL, "ru_RU.UTF-8");
+    
     double r, R, h;
 
     cout << "Введите радиус 1: ";

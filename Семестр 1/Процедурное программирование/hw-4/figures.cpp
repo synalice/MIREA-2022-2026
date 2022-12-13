@@ -67,7 +67,8 @@ double getCircleArea() {
 
 int main()
 {
-    setlocale(LC_ALL, "Russian");
+    setlocale(LC_ALL, "ru_RU.UTF-8");
+    
     int user_choice = getUserChoice();
     double area;
     switch (user_choice)

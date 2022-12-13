@@ -1,8 +1,8 @@
 #include <iostream>
-
-using namespace std;
+#include <clocale>
 
 void main()
 {
-	cout << "My name is Nikita!" << endl;
+	std::setlocale(LC_ALL, "ru_RU.UTF-8");
+	std::cout << "Моё имя - Никита!" << std::endl;
 }
