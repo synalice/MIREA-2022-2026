@@ -75,6 +75,8 @@ std::vector<int> VecStrToVecInt(std::vector<std::string> vec) {
 * вводе монаха под номером один (1).
 */
 void FillMonks(std::unordered_map<student, teacher>* monk_map) {
+	std::vector<int> teachers;
+	
 	std::cout << "Введите исходные данные о монахах:" << std::endl;
 
 	std::string input;
@@ -85,15 +87,25 @@ void FillMonks(std::unordered_map<student, teacher>* monk_map) {
 			continue;
 		}
 		std::vector<int> monk_ID_s = VecStrToVecInt(splitted_input);
+		int teacher = monk_ID_s[0];
+
+		if (std::find(teachers.begin(), teachers.end(), teacher) != teachers.end()) {
+			std::cerr << "ОШИБКА: Такой учитель уже существует" << std::endl;
+			continue;
+		}
+		else {
+			teachers.push_back(teacher);
+		}
 
 		for (int i = 0; i < monk_ID_s.size() - 1; i++) {
 			if (monk_ID_s[i + 1] == 0) {
 				continue;
 			}
-			monk_map->insert({ monk_ID_s[i + 1], monk_ID_s[0] });
+
+			monk_map->insert({ monk_ID_s[i + 1], teacher });
 		}
 
-		if (monk_ID_s[0] == 1) {
+		if (teacher == 1) {
 			break;
 		}
 	}
